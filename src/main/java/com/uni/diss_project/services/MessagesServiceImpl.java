@@ -33,4 +33,14 @@ public class MessagesServiceImpl implements MessagesService{
     public List<Message> getAllFrom(String recipient, String sender) {
         return messageRepository.findAllByRecipientAndSender(recipient, sender);
     }
+
+    @Override
+    public List<Message> getMessagesSentTo(String username, String recipient) {
+        return messageRepository.findAllByRecipientAndSender(recipient, username);
+    }
+
+    @Override
+    public List<Message> getAllSentMessages(String username) {
+        return messageRepository.findAllBySender(username);
+    }
 }

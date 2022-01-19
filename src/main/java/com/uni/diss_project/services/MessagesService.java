@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface MessagesService {
 
-    public Message send(Message message);
-    public List<Message> getAll(String username);
-    public List<Message> getAllFrom(String username, String sender);
+    Message send(Message message);
+    List<Message> getAll(String username);
+    List<Message> getAllFrom(String username, String sender);
+    List<Message> getMessagesSentTo(String username, String recipient);
+    List<Message> getAllSentMessages(String username);
 
 }

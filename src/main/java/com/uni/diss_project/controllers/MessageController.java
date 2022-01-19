@@ -34,17 +34,31 @@ public class MessageController {
         return messagesService.send(message);
     }
 
-    @GetMapping
+    @GetMapping("/received")
     public List<Message> getAll(@RequestParam String username, @RequestParam String password) {
 
         authorizationService.authorize(username, password);
         return messagesService.getAll(username);
     }
 
-    @GetMapping("/{sender}")
+    @GetMapping("/received/{sender}")
     public List<Message> getAllFrom(@RequestParam String username, @RequestParam String password, @PathVariable String sender) {
 
         authorizationService.authorize(username, password);
         return messagesService.getAllFrom(username, sender);
+    }
+
+    @GetMapping("/sent")
+    public List<Message> getAllSentMessage(@RequestParam String username, @RequestParam String password) {
+
+        authorizationService.authorize(username, password);
+        return messagesService.getAllSentMessages(username);
+    }
+
+    @GetMapping("/sent/{recipient}")
+    public List<Message> getAllMessageSentTo(@RequestParam String username, @RequestParam String password, @PathVariable String recipient) {
+
+        authorizationService.authorize(username, password);
+        return messagesService.getMessagesSentTo(username, recipient);
     }
 }

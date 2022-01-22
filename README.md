@@ -8,7 +8,7 @@ Project for DISS (design and integration of software systems) course at uni
 
 * mvn spring-boot:run
 
-If opt ti start database with *docker:start* you can use default settings. If
+If you start database with *docker:start* you can use default settings. If
 you want to use other database the following environment variables have to be set:
 
 * DB_HOST

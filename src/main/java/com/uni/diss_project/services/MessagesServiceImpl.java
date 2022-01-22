@@ -34,6 +34,7 @@ public class MessagesServiceImpl implements MessagesService{
 
         for (Message m: messages) {
             Message newMessage = new Message(m);
+            copy.add(newMessage);
         }
 
         messages.forEach(m -> m.setSeen(true));

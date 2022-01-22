@@ -1,6 +1,8 @@
 package com.uni.diss_project.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,9 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Message {
 
     @Id
@@ -23,7 +27,18 @@ public class Message {
 
     private boolean seen = false;
 
-    public Message(Message m) {
+    public Message(String content, String sender, String recipient, boolean seen) {
+        this.content = content;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.seen = seen;
+    }
 
+    public Message(Message m) {
+        this.id = m.getId();
+        this.content = m.getContent();
+        this.sender = m.getSender();
+        this.recipient = m.getRecipient();
+        this.seen = m.isSeen();
     }
 }

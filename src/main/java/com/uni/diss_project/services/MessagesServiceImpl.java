@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -46,6 +45,12 @@ public class MessagesServiceImpl implements MessagesService{
     public List<Message> getAllFrom(String recipient, String sender) {
         List<Message> messages =  messageRepository.findAllByRecipientAndSender(recipient, sender);
         List<Message> copy = new ArrayList<>(messages);
+
+        for (Message m: messages) {
+            Message newMessage = new Message(m);
+            copy.add(newMessage);
+        }
+
         messages.forEach(m -> m.setSeen(true));
         messageRepository.saveAll(messages);
         return copy;

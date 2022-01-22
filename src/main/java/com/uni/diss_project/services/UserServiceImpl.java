@@ -6,6 +6,8 @@ import com.uni.diss_project.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void delete(String username) {
         userRepository.deleteByUsername(username);
     }

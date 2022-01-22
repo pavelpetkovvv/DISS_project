@@ -15,4 +15,6 @@ public interface MessengerConstants {
 
     String USERS_API = API_BASE + "/users";
 
+    String AUTHORIZATION_API = API_BASE + "/auth";
+
 }

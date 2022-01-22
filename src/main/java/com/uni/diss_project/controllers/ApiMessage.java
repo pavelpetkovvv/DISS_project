@@ -4,24 +4,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiError {
+public class ApiMessage {
 
     private int status;
 
-    private String error;
+    private String message;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<String> messages;
 
-    public ApiError(int status, String message) {
+    public ApiMessage(int status, String message) {
         this.status = status;
-        this.error = message;
+        this.message = message;
     }
+
 }

@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,12 +28,26 @@ public class MessagesServiceImpl implements MessagesService{
 
     @Override
     public List<Message> getAll(String recipient) {
-        return messageRepository.findAllByRecipient(recipient);
+
+        List<Message> messages = messageRepository.findAllByRecipient(recipient);
+        List<Message> copy = new ArrayList<>();
+
+        for (Message m: messages) {
+            Message newMessage = new Message(m);
+        }
+
+        messages.forEach(m -> m.setSeen(true));
+        messageRepository.saveAll(messages);
+        return copy;
     }
 
     @Override
     public List<Message> getAllFrom(String recipient, String sender) {
-        return messageRepository.findAllByRecipientAndSender(recipient, sender);
+        List<Message> messages =  messageRepository.findAllByRecipientAndSender(recipient, sender);
+        List<Message> copy = new ArrayList<>(messages);
+        messages.forEach(m -> m.setSeen(true));
+        messageRepository.saveAll(messages);
+        return copy;
     }
 
     @Override

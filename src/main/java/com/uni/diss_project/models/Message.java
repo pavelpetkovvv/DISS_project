@@ -20,4 +20,10 @@ public class Message {
     private String sender;
 
     private String recipient;
+
+    private boolean seen = false;
+
+    public Message(Message m) {
+
+    }
 }

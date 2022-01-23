@@ -75,4 +75,11 @@ public class MessageController {
         authorizationService.authorize(username, password);
         return messagesService.getConversation(username, sender);
     }
+
+    @GetMapping("/contacts")
+    public List<String> getContacts(@RequestParam String username, @RequestParam String password) {
+
+        authorizationService.authorize(username, password);
+        return messagesService.getContacts(username);
+    }
 }

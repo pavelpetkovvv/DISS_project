@@ -12,4 +12,5 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
     List<Message> findAllByRecipientAndSender(String recipient, String sender);
     List<Message> findAllBySender(String sender);
     List<Message> findByRecipientInAndSenderIn(List<String> recipient, List<String> sender);
+
 }

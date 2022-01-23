@@ -161,6 +161,21 @@ they have been sent.
     }
 ]
 ```
+
+* **GET** /api/v1/messages/contacts?username=John&password=123
+
+returns al users that have sent messages to John or have received message
+from John
+
+**example response:**
+
+```
+[
+    "Karl",
+    "Frank"
+]
+```
+
 ---
 
 ***Authorization***

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -75,5 +77,21 @@ public class MessagesServiceImpl implements MessagesService{
             }
         }
         return messageRepository.saveAll(conversation);
+    }
+
+    @Override
+    public List<String> getContacts(String username) {
+        Set<String> contacts = new HashSet<>();
+        List<Message> sent = messageRepository.findAllBySender(username);
+        List<Message> received = messageRepository.findAllByRecipient(username);
+
+        for (Message m : sent) {
+            contacts.add(m.getRecipient());
+        }
+        for (Message m : received) {
+            contacts.add(m.getSender());
+        }
+
+        return new ArrayList<>(contacts);
     }
 }

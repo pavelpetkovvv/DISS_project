@@ -30,7 +30,7 @@ export class MessengerComponent implements OnInit {
 
   submit(): void {
     this.http.post('http://localhost:8080/api/v1/message', {
-      
-    })
+
+    });
   }
 }

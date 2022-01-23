@@ -9,16 +9,20 @@
     <a class="nav-link nav-text" routerLink="/home" routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }">Home</a>
   </div>
-  <div class="header-nav">
-    <a class="nav-link nav-text" routerLink="/about" routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }">About</a>
-  </div>
   <div class="header-actions">
-    <form clrForm [formGroup]="formGroup" *ngIf="!user">
+    <form clrForm [formGroup]="loginFormGroup" *ngIf="!loggedIn">
       <input type="username" placeholder="username" formControlName="username">
       <input type="password" placeholder="password" formControlName="password">
       <button class="btn btn-primary" (click)="login()">Log in</button>
     </form>
+    <form clrForm>
+      <button class="btn btn-primary" (click)="logout()" *ngIf="loggedIn">Log Out</button>
+    </form>
   </div>
 </header>
-<router-outlet></router-outlet>
+<div class="alert alert-danger error-message" *ngIf="error">
+  <strong> {{ error }} </strong>
+</div>
+<app-register *ngIf="!loggedIn"></app-register>
+<app-messenger *ngIf="loggedIn"></app-messenger>
+

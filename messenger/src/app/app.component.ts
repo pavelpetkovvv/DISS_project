@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +10,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'messenger';
-  formGroup: FormGroup;
-  user; 
+  loginFormGroup: FormGroup;
+  loggedIn = false;
+  error;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
-    
-  }
-  ngOnInit() {
-    this.formGroup = this.formBuilder.group({
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.loginFormGroup = this.formBuilder.group({
       username: this.formBuilder.control(''),
       password: this.formBuilder.control('')
-    })
+    });
   }
 
-  login() {
-    sessionStorage.setItem('user', this.formGroup.get('username').value);
-    this.router.navigateByUrl('/messenger');
+  login(): void {
+    this.authService.authenticate(this.loginFormGroup.get('username').value, this.loginFormGroup.get('password').value)
+      .subscribe(data => {
+        if (data.status === 200){
+          this.loggedIn = true;
+          this.error = null;
+        }
+      }, err => {
+        this.error = err.error.error;
+      });
   }
 
-  logout() {
-    sessionStorage.removeItem('user');
-  }
-
-  isLoggedIn() {
-    return sessionStorage.getItem('user');
+  logout(): void {
+    this.loggedIn = false;
   }
 }

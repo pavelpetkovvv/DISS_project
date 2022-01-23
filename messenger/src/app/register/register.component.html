@@ -1,3 +1,9 @@
+<div class="alert alert-success" *ngIf="message">
+    <strong> {{ message | json}} </strong>
+</div>
+<div class="alert alert-danger error-message" *ngIf="error">
+    <strong> {{ error.error.error | json }} </strong>
+</div>
 <div class="login-wrapper">
     <form clrForm class="login" [formGroup]="registerFormGroup">
         <section class="title">
@@ -7,7 +13,7 @@
         <div class="login-group">
             <clr-input-container>
                 <label class="clr-sr-only">Username</label>
-                <input type="text" name="username" clrInput placeholder="Username"  formControlName="username" />
+                <input type="text" name="username" clrInput placeholder="Username" formControlName="username" />
             </clr-input-container>
             <clr-password-container>
                 <label class="clr-sr-only">Password</label>

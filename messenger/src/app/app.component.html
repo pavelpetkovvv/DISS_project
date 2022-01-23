@@ -5,10 +5,6 @@
       <span class="title">Messenger</span>
     </a>
   </div>
-  <div class="header-nav">
-    <a class="nav-link nav-text" routerLink="/home" routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }">Home</a>
-  </div>
   <div class="header-actions">
     <form clrForm [formGroup]="loginFormGroup" *ngIf="!loggedIn">
       <input type="username" placeholder="username" formControlName="username">

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import Pusher from 'pusher-js';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-messenger',
@@ -8,29 +7,53 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./messenger.component.scss']
 })
 export class MessengerComponent implements OnInit {
-  username = 'username';
-  message = '';
-  messages = [];
+  @Input()
+  recipient = '';
+  content = '';
+  messages: any[] = new Array<any>();
+  contacts = [];
+  username: string;
+  password: string;
+  error;
+  selectedChat = 'Select chat';
 
-  constructor(private http: HttpClient) {
+  constructor(private messageService: MessageService) {
   }
 
   ngOnInit(): void {
-    Pusher.logToConsole = true;
-
-    const pusher = new Pusher('25291c0752d6089a660c', {
-      cluster: 'eu'
-    });
-
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', data => {
-      this.messages.push(data);
-    });
+    this.username = sessionStorage.getItem('user');
+    this.password = sessionStorage.getItem('password');
+    this.messageService.getContacts(this.username, this.password).subscribe(data => {
+      this.contacts = data;
+    });  
   }
 
   submit(): void {
-    this.http.post('http://localhost:8080/api/v1/message', {
+    this.messageService.sendMessage(this.username, this.password, this.recipient, this.content)
+      .subscribe(_data => {
+        this.messages.push({
+          sender: this.username,
+          content: this.content
+        })
+        this.content = '';
+        this.error = null;
+      }
+      , err => this.error = err);
+  }
 
+  selectChat(contact: string) {
+    this.selectedChat = contact;
+    this.recipient = contact;
+    this.loadMessages();
+  }
+
+  loadMessages() {
+    this.messageService.getMessagesFromUser(this.username, this.password, this.recipient).subscribe((data: any[]) => {
+      if(data){
+        this.messages = data;
+      } else {
+        this.messages = [];
+      }
     });
   }
 }

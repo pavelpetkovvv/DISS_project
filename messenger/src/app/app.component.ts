@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     this.authService.authenticate(this.loginFormGroup.get('username').value, this.loginFormGroup.get('password').value)
       .subscribe(data => {
         if (data.status === 200){
+          sessionStorage.setItem('user', this.loginFormGroup.get('username').value);
+          sessionStorage.setItem('password', this.loginFormGroup.get('password').value);
           this.loggedIn = true;
           this.error = null;
         }
@@ -36,6 +38,8 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('password');
     this.loggedIn = false;
   }
 }

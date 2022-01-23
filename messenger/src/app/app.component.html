@@ -1,28 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="assets/logo.jpeg" alt="" width="40" height="40">
-      Messenger</a>
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-      </ul>
-      <li class="d-flex" *ngIf="!isLoggedIn()">
-        <form [formGroup]="formGroup">
-          <input type="username" placeholder="username" formControlName="username">
-          <input type="password" placeholder="password" formControlName="password"> 
-          <button class="btn btn-outline-success" (click)="login()">Log in</button>
-        </form>
-      </li>
-      <li class="d-flex" *ngIf="isLoggedIn()">
-        <button class="btn btn-outline-success" (click)="logout()">Log out</button>
-      </li>
-    </div>
+<header class="header-6">
+  <div class="branding">
+    <a href="" class="nav-link">
+      <img src="../assets/logo.jpeg" width="40" height="40" class="logo" alt="VMware logo" />
+      <span class="title">Messenger</span>
+    </a>
   </div>
-</nav>
+  <div class="header-nav">
+    <a class="nav-link nav-text" routerLink="/home" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  </div>
+  <div class="header-nav">
+    <a class="nav-link nav-text" routerLink="/about" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">About</a>
+  </div>
+  <div class="header-actions">
+    <form clrForm [formGroup]="formGroup" *ngIf="!user">
+      <input type="username" placeholder="username" formControlName="username">
+      <input type="password" placeholder="password" formControlName="password">
+      <button class="btn btn-primary" (click)="login()">Log in</button>
+    </form>
+  </div>
+</header>
 <router-outlet></router-outlet>

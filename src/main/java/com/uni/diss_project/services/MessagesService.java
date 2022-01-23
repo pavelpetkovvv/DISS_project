@@ -11,5 +11,7 @@ public interface MessagesService {
     List<Message> getAllFrom(String username, String sender);
     List<Message> getMessagesSentTo(String username, String recipient);
     List<Message> getAllSentMessages(String username);
+    List<Message> getConversation(String username, String sender);
+    List<String> getContacts(String username);
 
 }

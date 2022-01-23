@@ -65,4 +65,15 @@ public class MessagesServiceImpl implements MessagesService{
     public List<Message> getAllSentMessages(String username) {
         return messageRepository.findAllBySender(username);
     }
+
+    @Override
+    public List<Message> getConversation(String username, String sender) {
+        List<Message> conversation =  messageRepository.findByRecipientInAndSenderIn(List.of(username, sender), List.of(username, sender));
+        for (Message m: conversation) {
+            if(m.getSender().equals(sender)){
+                m.setSeen(true);
+            }
+        }
+        return messageRepository.saveAll(conversation);
+    }
 }

@@ -4,6 +4,10 @@ Project for DISS (design and integration of software systems) course at uni
 
 ### How to run project
 
+***Backend:***
+
+* cd project_root/
+
 * mvn docker:start - to start database as Docker container
 
 * mvn spring-boot:run
@@ -17,6 +21,16 @@ you want to use other database the following environment variables have to be se
 * DB_USERNAME
 * DB_PASSWORD
 
+* backend is accessible at localhost:8080
+
+***Frontend:***
+
+1. cd project_root/messsenger
+2. npm install
+3. npm run start-dev
+
+* UI is accessible at localhost:4200
+* backend must be running in order for frontend to work properly
 
 ### API endpoints
 

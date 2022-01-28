@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { MessageService } from '../services/message.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class MessengerComponent implements OnInit {
   password: string;
   error;
   selectedChat = 'Select chat';
+  subscription: Subscription;
 
   constructor(private messageService: MessageService) {
   }
@@ -23,9 +25,16 @@ export class MessengerComponent implements OnInit {
   ngOnInit(): void {
     this.username = sessionStorage.getItem('user');
     this.password = sessionStorage.getItem('password');
-    this.messageService.getContacts(this.username, this.password).subscribe(data => {
-      this.contacts = data;
-    });  
+    this.loadContacts();
+    const source = interval(5000);
+    this.subscription = source.subscribe(_arg => {
+        this.loadMessages();
+        this.loadContacts();
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   submit(): void {
@@ -55,5 +64,11 @@ export class MessengerComponent implements OnInit {
         this.messages = [];
       }
     });
+  }
+
+  loadContacts() {
+    this.messageService.getContacts(this.username, this.password).subscribe(data => {
+      this.contacts = data;
+    });  
   }
 }
